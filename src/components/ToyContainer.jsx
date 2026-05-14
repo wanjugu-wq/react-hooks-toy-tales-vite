@@ -2,11 +2,11 @@ import React from "react";
 import ToyCard from "./ToyCard";
 import { useState, useEffect } from "react";
 
-function ToyContainer({ toys, handleDelete }) {
+function ToyContainer({ toys, handleDelete, handleLike }) {
   return (
     <div id="toy-collection">
       {toys.map((toy) => (
-        <ToyCard key={toy.id} toy={toy} handleDelete={handleDelete} />
+        <ToyCard key={toy.id} toy={toy} handleDelete={handleDelete} handleLike={handleLike} />
       ))}
     </div>
   );

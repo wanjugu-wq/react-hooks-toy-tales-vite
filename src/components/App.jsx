@@ -28,15 +28,34 @@ function App() {
         setToys(updatedToys);
       });
   }
+  function handleLike(id) {
+    const toyToLike = toys.find((toy) => toy.id === id);
+    const updatedToy = { ...toyToLike, likes: toyToLike.likes + 1 };
+
+    fetch(`http://localhost:3001/toys/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedToy),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const updatedToys = toys.map((toy) =>
+          toy.id === id ? data : toy
+        );
+        setToys(updatedToys);
+      });
+  }
 
   return (
     <>
       <Header />
-      {showForm ? <ToyForm toys={toys} /> : null}
+      {showForm ? <ToyForm toys={toys} setToys={setToys} /> : null}
       <div className="buttonContainer">
         <button onClick={handleClick}>Add a Toy</button>
       </div>
-      <ToyContainer toys={toys} handleDelete={handleDelete} />
+      <ToyContainer toys={toys} handleDelete={handleDelete} handleLike={handleLike} />
     </>
   );
 }
